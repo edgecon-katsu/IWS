@@ -94,6 +94,8 @@
 </template>
 
 <script setup>
+import { PlusIcon } from '@heroicons/vue/24/outline'
+
 // refはNuxt 3で自動インポートされる
 
 const slaSettings = ref([
@@ -141,10 +143,86 @@ const escalationRules = ref([
 
 const getPriorityBadgeClass = (priority) => {
   const classes = {
+// モーダル状態
+const showSlaModal = ref(false)
+const showEscalationModal = ref(false)
+
+// 編集中のデータ
+const editingSla = ref({ priority: '', name: '', responseTime: '', resolutionTime: '', businessHours: '' })
+const editingEscalation = ref({ name: '', condition: '', notifyTo: '' })
+
+// 編集中のインデックス
+const editingSlaIndex = ref(-1)
+const editingEscalationIndex = ref(-1)
+
     'P1': 'priority-badge-p1',
     'P2': 'priority-badge-p2',
     'P3': 'priority-badge-p3'
   }
   return classes[priority] || 'badge badge-neutral'
+}
+
+// SLA関連の関数
+const editSla = (sla, index) => {
+  editingSla.value = { ...sla }
+  editingSlaIndex.value = index
+  showSlaModal.value = true
+}
+
+const closeSlaModal = () => {
+  showSlaModal.value = false
+  editingSla.value = { priority: '', name: '', responseTime: '', resolutionTime: '', businessHours: '' }
+  editingSlaIndex.value = -1
+}
+
+const saveSla = () => {
+  if (!editingSla.value.name || !editingSla.value.responseTime || !editingSla.value.resolutionTime || !editingSla.value.businessHours) return
+  
+  slaSettings.value[editingSlaIndex.value] = { ...editingSla.value }
+  closeSlaModal()
+}
+
+// 営業時間保存
+const saveBusinessHours = () => {
+  alert('営業時間設定を保存しました')
+}
+
+// エスカレーション関連の関数
+const openAddEscalationModal = () => {
+  editingEscalation.value = { name: '', condition: '', notifyTo: '' }
+  editingEscalationIndex.value = -1
+  showEscalationModal.value = true
+}
+
+const editEscalation = (escalation, index) => {
+  editingEscalation.value = { ...escalation }
+  editingEscalationIndex.value = index
+  showEscalationModal.value = true
+}
+
+const closeEscalationModal = () => {
+  showEscalationModal.value = false
+  editingEscalation.value = { name: '', condition: '', notifyTo: '' }
+  editingEscalationIndex.value = -1
+}
+
+const saveEscalation = () => {
+  if (!editingEscalation.value.name || !editingEscalation.value.condition) return
+  
+  if (editingEscalationIndex.value === -1) {
+    // 新規追加
+    escalationRules.value.push({ ...editingEscalation.value })
+  } else {
+    // 更新
+    escalationRules.value[editingEscalationIndex.value] = { ...editingEscalation.value }
+  }
+  
+  closeEscalationModal()
+}
+
+const deleteEscalation = (index) => {
+  if (confirm('このエスカレーションルールを削除しますか？')) {
+    escalationRules.value.splice(index, 1)
+  }
 }
 </script>

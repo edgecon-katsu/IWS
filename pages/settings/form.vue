@@ -63,6 +63,8 @@
 </template>
 
 <script setup>
+import { PlusIcon } from '@heroicons/vue/24/outline'
+
 // refはNuxt 3で自動インポートされる
 
 const categories = ref([
@@ -121,6 +123,21 @@ const priorities = ref([
   }
 ])
 
+// モーダル状態
+const showCategoryModal = ref(false)
+const showTargetModal = ref(false)
+const showPriorityModal = ref(false)
+
+// 編集中のデータ
+const editingCategory = ref({ name: '', description: '' })
+const editingTarget = ref({ name: '', description: '' })
+const editingPriority = ref({ level: '', name: '', description: '' })
+
+// 編集中のインデックス（-1は新規追加）
+const editingCategoryIndex = ref(-1)
+const editingTargetIndex = ref(-1)
+const editingPriorityIndex = ref(-1)
+
 const getPriorityBadgeClass = (priority) => {
   const classes = {
     'P1': 'priority-badge-p1',
@@ -128,5 +145,103 @@ const getPriorityBadgeClass = (priority) => {
     'P3': 'priority-badge-p3'
   }
   return classes[priority] || 'badge badge-neutral'
+}
+
+// カテゴリ関連の関数
+const openAddCategoryModal = () => {
+  editingCategory.value = { name: '', description: '' }
+  editingCategoryIndex.value = -1
+  showCategoryModal.value = true
+}
+
+const editCategory = (category, index) => {
+  editingCategory.value = { ...category }
+  editingCategoryIndex.value = index
+  showCategoryModal.value = true
+}
+
+const closeCategoryModal = () => {
+  showCategoryModal.value = false
+  editingCategory.value = { name: '', description: '' }
+  editingCategoryIndex.value = -1
+}
+
+const saveCategory = () => {
+  if (!editingCategory.value.name || !editingCategory.value.description) return
+  
+  if (editingCategoryIndex.value === -1) {
+    // 新規追加
+    categories.value.push({ ...editingCategory.value })
+  } else {
+    // 更新
+    categories.value[editingCategoryIndex.value] = { ...editingCategory.value }
+  }
+  
+  closeCategoryModal()
+}
+
+const deleteCategory = (index) => {
+  if (confirm('このカテゴリを削除しますか？')) {
+    categories.value.splice(index, 1)
+  }
+}
+
+// 対象関連の関数
+const openAddTargetModal = () => {
+  editingTarget.value = { name: '', description: '' }
+  editingTargetIndex.value = -1
+  showTargetModal.value = true
+}
+
+const editTarget = (target, index) => {
+  editingTarget.value = { ...target }
+  editingTargetIndex.value = index
+  showTargetModal.value = true
+}
+
+const closeTargetModal = () => {
+  showTargetModal.value = false
+  editingTarget.value = { name: '', description: '' }
+  editingTargetIndex.value = -1
+}
+
+const saveTarget = () => {
+  if (!editingTarget.value.name || !editingTarget.value.description) return
+  
+  if (editingTargetIndex.value === -1) {
+    // 新規追加
+    targets.value.push({ ...editingTarget.value })
+  } else {
+    // 更新
+    targets.value[editingTargetIndex.value] = { ...editingTarget.value }
+  }
+  
+  closeTargetModal()
+}
+
+const deleteTarget = (index) => {
+  if (confirm('この対象を削除しますか？')) {
+    targets.value.splice(index, 1)
+  }
+}
+
+// 優先度関連の関数
+const editPriority = (priority, index) => {
+  editingPriority.value = { ...priority }
+  editingPriorityIndex.value = index
+  showPriorityModal.value = true
+}
+
+const closePriorityModal = () => {
+  showPriorityModal.value = false
+  editingPriority.value = { level: '', name: '', description: '' }
+  editingPriorityIndex.value = -1
+}
+
+const savePriority = () => {
+  if (!editingPriority.value.name || !editingPriority.value.description) return
+  
+  priorities.value[editingPriorityIndex.value] = { ...editingPriority.value }
+  closePriorityModal()
 }
 </script>
