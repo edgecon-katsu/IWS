@@ -23,10 +23,10 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu bg-white border border-gray-200 rounded-box z-[1] w-52 p-2 shadow-lg">
               <li>
-                <router-link to="/login" class="flex items-center space-x-2 p-2 text-error">
+                <button @click="handleLogout" class="flex items-center space-x-2 p-2 text-error w-full text-left">
                   <ArrowRightOnRectangleIcon class="h-4 w-4" />
                   <span>ログアウト</span>
-                </router-link>
+                </button>
               </li>
             </ul>
           </div>
@@ -42,5 +42,4 @@ import {
   ChevronDownIcon
 } from '@heroicons/vue/24/outline'
 
-const { user, userRole } = useAuth()
 </script>
