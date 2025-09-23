@@ -45,21 +45,16 @@
             <label class="label">
               <span class="label-text font-medium">目的</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.purpose" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms.EUS.purpose" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.purpose" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 端末 -->
@@ -67,21 +62,16 @@
             <label class="label">
               <span class="label-text font-medium">端末</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.device" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms.EUS.device" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.device" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 症状 -->
@@ -89,21 +79,16 @@
             <label class="label">
               <span class="label-text font-medium">症状</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.symptoms" class="iws-select" multiple>
+              <option 
                 v-for="option in categoryForms.EUS.symptoms" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.symptoms" 
-                  type="checkbox" 
-                  :value="option" 
-                  class="checkbox checkbox-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
+            <div class="text-xs text-gray-500 mt-1">複数選択可能（Ctrlキーを押しながらクリック）</div>
           </div>
 
           <!-- 最近の変更 -->
@@ -111,21 +96,16 @@
             <label class="label">
               <span class="label-text font-medium">最近の変更</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.recentChanges" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms.EUS.recentChanges" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.recentChanges" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 詳細情報 -->
@@ -164,21 +144,16 @@
             <label class="label">
               <span class="label-text font-medium">作業区分</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.workType" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms['Z-CRM'].workType" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.workType" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 対象区分 -->
@@ -186,21 +161,16 @@
             <label class="label">
               <span class="label-text font-medium">対象区分</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.targetType" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms['Z-CRM'].targetType" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.targetType" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- レコード特定 -->
@@ -289,21 +259,16 @@
             <label class="label">
               <span class="label-text font-medium">種類</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.type" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms['zwei.com'].type" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.type" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- URL -->
@@ -324,21 +289,16 @@
             <label class="label">
               <span class="label-text font-medium">端末</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.device" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms['zwei.com'].device" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.device" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 公開希望（更新時） -->
@@ -358,21 +318,16 @@
             <label class="label">
               <span class="label-text font-medium">ブラウザ</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.browser" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms['zwei.com'].browser" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.browser" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 要素名 -->
@@ -424,21 +379,16 @@
             <label class="label">
               <span class="label-text font-medium">拠点</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.location" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms.network.location" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.location" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 機器 -->
@@ -446,21 +396,16 @@
             <label class="label">
               <span class="label-text font-medium">機器</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.equipment" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms.network.equipment" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.equipment" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
 
           <!-- 症状 -->
@@ -468,21 +413,16 @@
             <label class="label">
               <span class="label-text font-medium">症状</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.symptoms" class="iws-select" multiple>
+              <option 
                 v-for="option in categoryForms.network.symptoms" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.symptoms" 
-                  type="checkbox" 
-                  :value="option" 
-                  class="checkbox checkbox-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
+            <div class="text-xs text-gray-500 mt-1">複数選択可能（Ctrlキーを押しながらクリック）</div>
           </div>
 
           <!-- ランプ -->
@@ -490,21 +430,16 @@
             <label class="label">
               <span class="label-text font-medium">ランプ</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.lampStatus" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms.network.lampStatus" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.lampStatus" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
             <!-- 不明選択時のファイル選択 -->
             <div v-if="form.details.lampStatus === '不明'" class="mt-4">
               <label class="label">
@@ -524,21 +459,16 @@
             <label class="label">
               <span class="label-text font-medium">回線業者連絡</span>
             </label>
-            <div class="space-y-2">
-              <label 
+            <select v-model="form.details.carrierContact" class="iws-select">
+              <option value="">選択してください</option>
+              <option 
                 v-for="option in categoryForms.network.carrierContact" 
                 :key="option" 
-                class="cursor-pointer flex items-center"
+                :value="option"
               >
-                <input 
-                  v-model="form.details.carrierContact" 
-                  type="radio" 
-                  :value="option" 
-                  class="radio radio-primary mr-3"
-                />
-                <span>{{ option }}</span>
-              </label>
-            </div>
+                {{ option }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
@@ -548,21 +478,16 @@
         <label class="label">
           <span class="label-text font-medium">2. 対象</span>
         </label>
-        <div class="space-y-2">
-          <label 
+        <select v-model="form.target" class="iws-select">
+          <option value="">選択してください</option>
+          <option 
             v-for="target in targets" 
             :key="target.value" 
-            class="cursor-pointer flex items-center"
+            :value="target.value"
           >
-            <input 
-              v-model="form.target" 
-              type="radio" 
-              :value="target.value" 
-              class="radio radio-primary mr-3"
-            />
-            <span>{{ target.label }}</span>
-          </label>
-        </div>
+            {{ target.label }}
+          </option>
+        </select>
       </div>
 
       <!-- 次へボタン -->
