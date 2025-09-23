@@ -27,7 +27,7 @@
         <select v-model="form.category" @change="onCategoryChange" class="iws-select">
           <option value="">選択してください</option>
           <option 
-            v-for="category in config.categories" 
+            v-for="category in categories" 
             :key="category.value" 
             :value="category.value"
           >
@@ -550,7 +550,7 @@
         </label>
         <div class="space-y-2">
           <label 
-            v-for="target in config.targets" 
+            v-for="target in targets" 
             :key="target.value" 
             class="cursor-pointer flex items-center"
           >
@@ -584,7 +584,62 @@
 import { ArrowRightIcon } from '@heroicons/vue/24/outline'
 
 const config = useRuntimeConfig()
-const categoryForms = config.public.inquiryForm.categoryForms
+
+// 設定値を直接定義
+const categories = [
+  {
+    value: 'EUS',
+    label: 'EUS（社内ITサポート）',
+    description: '端末・アカウント・ソフトウェアの問題'
+  },
+  {
+    value: 'Z-CRM',
+    label: '保守 — Z-CRM',
+    description: '顧客管理システムの修正・操作代行'
+  },
+  {
+    value: 'zwei.com',
+    label: '保守 — zwei.com',
+    description: 'Webサイトの障害・コンテンツ更新'
+  },
+  {
+    value: 'network',
+    label: '保守 — ネットワーク',
+    description: '拠点・店舗のネットワーク障害'
+  }
+]
+
+const targets = [
+  { value: 'terminal', label: '端末・アカウント' },
+  { value: 'app', label: 'アプリ（Z-CRM/他）' },
+  { value: 'site', label: 'サイト（zwei.com）' },
+  { value: 'network', label: '拠点ネットワーク' }
+]
+
+const categoryForms = {
+  EUS: {
+    purpose: ['障害/不具合', '操作相談', 'アカウント/パスワード', 'ソフト導入', 'プリンタ/VPN/メール'],
+    device: ['PC', 'モバイル', '周辺機器', 'アカウント'],
+    symptoms: ['起動不可', 'サインイン不可', 'メール不可', 'その他'],
+    recentChanges: ['OS更新', 'ドライバ更新', 'なし', '不明']
+  },
+  'Z-CRM': {
+    workType: ['UI操作代行（EUS）', 'システム修正（保守）'],
+    targetType: ['会員', '契約', '申込', 'リード', 'マスタ', 'その他']
+  },
+  'zwei.com': {
+    type: ['障害/不具合', 'コンテンツ更新', '質問'],
+    device: ['PC', 'スマホ', 'タブレット'],
+    browser: ['Chrome', 'Safari', 'Edge', 'Firefox']
+  },
+  network: {
+    location: ['本社', '支社1', '支社2', '店舗01', '店舗51'],
+    equipment: ['XGS2300HA', 'XGS2100HA', 'SD‑RED', 'AP6 420E', 'WAX610', '不明'],
+    symptoms: ['全断', 'Wi‑Fiのみ', '特定サイトのみ', '低速', '断続', '特定端末のみ'],
+    lampStatus: ['正常', '異常', '不明'],
+    carrierContact: ['済', '未']
+  }
+}
 
 const form = ref({
   category: '',
