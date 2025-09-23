@@ -42,4 +42,15 @@ import {
   ChevronDownIcon
 } from '@heroicons/vue/24/outline'
 
+const { user, userRole } = useAuth()
+
+const handleLogout = () => {
+  // ユーザー情報をクリア
+  const { setUser } = useAuth()
+  setUser(null)
+  
+  // ログインページにリダイレクト
+  navigateTo('/login')
+}
+
 </script>
