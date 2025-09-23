@@ -102,31 +102,6 @@
           </router-link>
         </li>
       </ul>
-
-      <!-- SLA & KPI サマリー -->
-      <div v-if="userRole === 'support'" class="mt-8 p-4 bg-base-200 rounded-lg">
-        <h3 class="text-sm font-semibold text-gray-700 mb-3">今月の状況</h3>
-        <div class="space-y-2">
-          <div class="flex justify-between items-center">
-            <span class="text-xs text-gray-600">EUS消化</span>
-            <span class="text-xs font-medium">72h / 100h</span>
-          </div>
-          <progress class="progress progress-primary w-full h-2" value="72" max="100"></progress>
-          
-          <div class="flex justify-between items-center mt-3">
-            <span class="text-xs text-gray-600">Z-CRM</span>
-            <span class="text-xs font-medium">64 / 80</span>
-          </div>
-          <progress class="progress progress-success w-full h-2" value="64" max="80"></progress>
-          
-          <div class="mt-3 p-2 bg-success/10 rounded text-xs">
-            <div class="flex items-center space-x-1">
-              <CheckCircleIcon class="h-3 w-3 text-success" />
-              <span class="text-success font-medium">SLA 99.92%</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </nav>
   </aside>
 </template>
@@ -138,7 +113,6 @@ import {
   TicketIcon, 
   ClipboardDocumentCheckIcon, 
   Cog6ToothIcon,
-  CheckCircleIcon,
   SwatchIcon
 } from '@heroicons/vue/24/outline'
 
