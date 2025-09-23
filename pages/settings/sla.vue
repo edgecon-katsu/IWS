@@ -141,8 +141,6 @@ const escalationRules = ref([
   }
 ])
 
-const getPriorityBadgeClass = (priority) => {
-  const classes = {
 // モーダル状態
 const showSlaModal = ref(false)
 const showEscalationModal = ref(false)
@@ -155,6 +153,8 @@ const editingEscalation = ref({ name: '', condition: '', notifyTo: '' })
 const editingSlaIndex = ref(-1)
 const editingEscalationIndex = ref(-1)
 
+const getPriorityBadgeClass = (priority) => {
+  const classes = {
     'P1': 'priority-badge-p1',
     'P2': 'priority-badge-p2',
     'P3': 'priority-badge-p3'
