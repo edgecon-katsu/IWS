@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- 戻るボタン -->
+    <div class="mb-4">
+      <button @click="goBack" class="btn btn-ghost btn-sm">
+        <ArrowLeftIcon class="h-4 w-4 mr-2" />
+        戻る
+      </button>
+    </div>
+
     <div class="mb-6">
       <div class="flex items-center justify-between mb-4">
         <div>
@@ -147,7 +155,8 @@
 import { 
   CheckCircleIcon,
   CheckIcon,
-  ArrowUturnLeftIcon
+  ArrowUturnLeftIcon,
+  ArrowLeftIcon
 } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
@@ -167,5 +176,10 @@ const cancelTicket = () => {
     // 取消し処理
     console.log('チケット取消し')
   }
+}
+
+const goBack = () => {
+  // 前のページに戻る
+  history.back()
 }
 </script>

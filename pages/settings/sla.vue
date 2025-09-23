@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-import { PlusIcon } from '@heroicons/vue/24/outline'
+import { PlusIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 // refはNuxt 3で自動インポートされる
 
@@ -224,5 +224,9 @@ const deleteEscalation = (index) => {
   if (confirm('このエスカレーションルールを削除しますか？')) {
     escalationRules.value.splice(index, 1)
   }
+}
+
+const goBack = () => {
+  return navigateTo('/settings')
 }
 </script>

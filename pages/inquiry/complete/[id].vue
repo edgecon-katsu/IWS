@@ -1,5 +1,13 @@
 <template>
   <div class="max-w-2xl mx-auto">
+    <!-- 戻るボタン -->
+    <div class="mb-4">
+      <button @click="goBack" class="btn btn-ghost btn-sm">
+        <ArrowLeftIcon class="h-4 w-4 mr-2" />
+        戻る
+      </button>
+    </div>
+
     <div class="text-center mb-8">
       <div class="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
         <CheckCircleIcon class="h-8 w-8 text-success" />
@@ -62,6 +70,12 @@
 import { 
   CheckCircleIcon, 
   TicketIcon,
-  PlusCircleIcon
+  PlusCircleIcon,
+  ArrowLeftIcon
 } from '@heroicons/vue/24/outline'
+
+const goBack = () => {
+  // 前のページに戻る
+  history.back()
+}
 </script>

@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- 戻るボタン -->
+    <div class="mb-4">
+      <button @click="goBack" class="btn btn-ghost btn-sm">
+        <ArrowLeftIcon class="h-4 w-4 mr-2" />
+        戻る
+      </button>
+    </div>
+
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-900 mb-2">ルーティング設定</h1>
       <p class="text-gray-600">カテゴリ×優先度の振り分けルールを管理します。</p>
@@ -70,7 +78,7 @@
 </template>
 
 <script setup>
-import { PlusIcon } from '@heroicons/vue/24/outline'
+import { PlusIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 // refはNuxt 3で自動インポートされる
 
@@ -168,5 +176,9 @@ const deleteAssignment = (index) => {
   if (confirm('この担当者割り当てを削除しますか？')) {
     assignments.value.splice(index, 1)
   }
+}
+
+const goBack = () => {
+  return navigateTo('/settings')
 }
 </script>

@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- 戻るボタン -->
+    <div class="mb-4">
+      <button @click="goBack" class="btn btn-ghost btn-sm">
+        <ArrowLeftIcon class="h-4 w-4 mr-2" />
+        戻る
+      </button>
+    </div>
+
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-900 mb-2">テーマ設定</h1>
       <p class="text-gray-600">システムの色テーマを選択できます。</p>
@@ -59,6 +67,8 @@
 </template>
 
 <script setup>
+import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
+
 // onMountedはNuxt 3で自動インポートされる
 
 const selectedTheme = ref('')
@@ -155,4 +165,9 @@ const loadSavedTheme = () => {
 onMounted(() => {
   loadSavedTheme()
 })
+
+const goBack = () => {
+  // 前のページに戻る
+  history.back()
+}
 </script>

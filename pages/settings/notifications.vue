@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- 戻るボタン -->
+    <div class="mb-4">
+      <button @click="goBack" class="btn btn-ghost btn-sm">
+        <ArrowLeftIcon class="h-4 w-4 mr-2" />
+        戻る
+      </button>
+    </div>
+
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-900 mb-2">通知設定</h1>
       <p class="text-gray-600">メール・システム通知の設定を管理します。</p>
@@ -146,7 +154,7 @@
 </template>
 
 <script setup>
-import { CheckIcon } from '@heroicons/vue/24/outline'
+import { CheckIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 const emailSettings = ref({
   newTicket: true,
@@ -175,5 +183,9 @@ const saveSettings = () => {
   console.log('System Settings:', systemSettings.value)
   
   alert('通知設定を保存しました')
+}
+
+const goBack = () => {
+  return navigateTo('/settings')
 }
 </script>

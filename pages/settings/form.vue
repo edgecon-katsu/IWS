@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- 戻るボタン -->
+    <div class="mb-4">
+      <button @click="goBack" class="btn btn-ghost btn-sm">
+        <ArrowLeftIcon class="h-4 w-4 mr-2" />
+        戻る
+      </button>
+    </div>
+
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-900 mb-2">フォーム設定</h1>
       <p class="text-gray-600">入力項目・選択肢の管理を行います。</p>
@@ -63,7 +71,7 @@
 </template>
 
 <script setup>
-import { PlusIcon } from '@heroicons/vue/24/outline'
+import { PlusIcon, ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 // refはNuxt 3で自動インポートされる
 
@@ -243,5 +251,9 @@ const savePriority = () => {
   
   priorities.value[editingPriorityIndex.value] = { ...editingPriority.value }
   closePriorityModal()
+}
+
+const goBack = () => {
+  return navigateTo('/settings')
 }
 </script>

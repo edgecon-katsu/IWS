@@ -213,7 +213,8 @@ import {
   TrashIcon,
   CogIcon,
   DocumentTextIcon,
-  CheckCircleIcon
+  CheckCircleIcon,
+  ArrowLeftIcon
 } from '@heroicons/vue/24/outline'
 
 const basicSettings = ref({
@@ -268,5 +269,9 @@ const exportLogs = () => {
 
 const systemCheck = () => {
   alert('システムチェックを実行しています...')
+}
+
+const goBack = () => {
+  return navigateTo('/settings')
 }
 </script>
