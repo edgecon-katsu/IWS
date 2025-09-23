@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  .iws-card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm p-6;
+  }
+  
+  .iws-btn-primary {
+    @apply btn btn-primary hover:brightness-110 transition-all duration-200;
+  }
+  
+  .iws-btn-secondary {
+    @apply btn btn-outline btn-secondary hover:bg-secondary hover:text-secondary-content transition-all duration-200;
+  }
+  
+  .iws-input {
+    @apply input input-bordered w-full focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
+  }
+  
+  .iws-select {
+    @apply select select-bordered w-full focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
+  }
+  
+  .iws-textarea {
+    @apply textarea textarea-bordered w-full focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
+  }
+  
+  .priority-badge-p1 {
+    @apply badge badge-error text-white font-bold px-3 py-1;
+  }
+  
+  .priority-badge-p2 {
+    @apply badge badge-warning text-white font-bold px-3 py-1;
+  }
+  
+  .priority-badge-p3 {
+    @apply badge badge-info text-white font-bold px-3 py-1;
+  }
+  
+  .status-badge-pending {
+    @apply badge badge-warning text-white px-3 py-1;
+  }
+  
+  .status-badge-approved {
+    @apply badge badge-success text-white px-3 py-1;
+  }
+  
+  .status-badge-rejected {
+    @apply badge badge-error text-white px-3 py-1;
+  }
+  
+  .status-badge-in-progress {
+    @apply badge badge-info text-white px-3 py-1;
+  }
+  
+  .status-badge-completed {
+    @apply badge badge-neutral text-white px-3 py-1;
+  }
+}
