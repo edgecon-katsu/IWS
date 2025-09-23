@@ -2,34 +2,8 @@
   <footer class="bg-white border-t border-gray-200 mt-auto">
     <div class="container mx-auto px-4 py-6">
       <div class="flex flex-wrap items-center justify-between space-y-4 md:space-y-0">
-        <!-- 左側：リンク -->
-        <div class="flex flex-wrap items-center space-x-6 text-sm">
-          <a href="#" class="text-primary hover:text-primary-focus transition-colors">
-            SLA・サービスレベル
-          </a>
-          <a href="#" class="text-primary hover:text-primary-focus transition-colors">
-            料金ルール
-          </a>
-          <a href="#" class="text-primary hover:text-primary-focus transition-colors">
-            よくある質問
-          </a>
-        </div>
-
-        <!-- 右側：緊急時連絡先 -->
-        <div class="flex items-center space-x-4">
-          <div class="text-sm text-gray-600">
-            P1緊急時:
-          </div>
-          <div class="flex items-center space-x-2">
-            <PhoneIcon class="h-4 w-4 text-error" />
-            <a 
-              href="tel:03-xxxx-xxxx" 
-              class="text-error font-medium hover:text-error-focus transition-colors"
-            >
-              03-xxxx-xxxx
-            </a>
-          </div>
-        </div>
+        <!-- 空のスペース -->
+        <div></div>
       </div>
       
       <!-- コピーライト -->
