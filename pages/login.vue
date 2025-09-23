@@ -3,11 +3,6 @@
     <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
       <!-- ロゴ -->
       <div class="text-center mb-8">
-        <img 
-          src="https://www.zwei.com/wp-content/themes/zwei/img/common/logo2.svg" 
-          alt="ZWEI Logo" 
-          class="h-12 mx-auto mb-4"
-        />
         <h1 class="text-2xl font-bold text-primary">IWS</h1>
         <p class="text-gray-600 text-sm">Internal Work System</p>
       </div>

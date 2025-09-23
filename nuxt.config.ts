@@ -34,13 +34,6 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'IWS - Internal Work System',
-      link: [
-        {
-          rel: 'icon',
-          type: 'image/x-icon',
-          href: 'https://www.zwei.com/wp-content/themes/zwei/img/favicon.ico'
-        }
-      ]
     }
   },
   

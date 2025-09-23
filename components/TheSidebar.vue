@@ -3,11 +3,6 @@
     <!-- ロゴ部分 -->
     <div class="p-4 border-b border-gray-200">
       <router-link to="/" class="flex items-center space-x-2">
-        <img 
-          src="https://www.zwei.com/wp-content/themes/zwei/img/common/logo2.svg" 
-          alt="ZWEI Logo" 
-          class="h-8"
-        />
         <span class="text-xl font-bold text-primary">IWS</span>
       </router-link>
     </div>

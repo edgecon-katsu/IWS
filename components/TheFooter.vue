@@ -10,7 +10,7 @@
       <div class="border-t border-gray-200 mt-4 pt-4">
         <div class="flex flex-wrap items-center justify-between text-xs text-gray-500">
           <div>
-            © 2025 ZWEI Inc. All rights reserved. | IWS - Internal Work System
+            © 2025 IWS - Internal Work System
           </div>
           <div>
             <span class="text-success">● オンライン</span>
