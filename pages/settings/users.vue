@@ -122,6 +122,67 @@
       </div>
       <div class="modal-backdrop" @click="showAddUserModal = false"></div>
     </div>
+
+    <!-- ユーザー編集モーダル -->
+    <div v-if="showEditUserModal" class="modal modal-open">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg mb-4">ユーザー編集</h3>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="label">
+              <span class="label-text font-medium">名前 <span class="text-error">*</span></span>
+            </label>
+            <input v-model="editingUser.name" type="text" class="iws-input" placeholder="田中太郎" required />
+          </div>
+          
+          <div>
+            <label class="label">
+              <span class="label-text font-medium">メールアドレス <span class="text-error">*</span></span>
+            </label>
+            <input v-model="editingUser.email" type="email" class="iws-input" placeholder="tanaka@zwei.com" required />
+          </div>
+          
+          <div>
+            <label class="label">
+              <span class="label-text font-medium">部署</span>
+            </label>
+            <select v-model="editingUser.department" class="iws-select">
+              <option value="">選択してください</option>
+              <option value="営業部">営業部</option>
+              <option value="管理部">管理部</option>
+              <option value="サポート部">サポート部</option>
+              <option value="情報システム部">情報システム部</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="label">
+              <span class="label-text font-medium">権限 <span class="text-error">*</span></span>
+            </label>
+            <select v-model="editingUser.role" class="iws-select" required>
+              <option value="">選択してください</option>
+              <option value="user">一般ユーザー</option>
+              <option value="approver">承認者</option>
+              <option value="support">サポート担当</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="cursor-pointer flex items-center space-x-2">
+              <input v-model="editingUser.active" type="checkbox" class="checkbox checkbox-primary" />
+              <span class="label-text font-medium">アクティブ</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-action">
+          <button @click="closeEditUserModal" class="btn btn-ghost">キャンセル</button>
+          <button @click="saveUser" class="btn btn-primary" :disabled="!editingUser.name || !editingUser.email || !editingUser.role">更新</button>
+        </div>
+      </div>
+      <div class="modal-backdrop" @click="closeEditUserModal"></div>
+    </div>
   </div>
 </template>
 
@@ -129,6 +190,7 @@
 import { PlusIcon } from '@heroicons/vue/24/outline'
 
 const showAddUserModal = ref(false)
+const showEditUserModal = ref(false)
 
 const newUser = ref({
   name: '',
@@ -136,6 +198,17 @@ const newUser = ref({
   department: '',
   role: ''
 })
+
+const editingUser = ref({
+  id: null,
+  name: '',
+  email: '',
+  department: '',
+  role: '',
+  active: true
+})
+
+const editingUserIndex = ref(-1)
 
 const users = ref([
   {
@@ -214,7 +287,32 @@ const addUser = () => {
 }
 
 const editUser = (user) => {
-  alert(`${user.name} の編集機能は開発中です`)
+  editingUser.value = { ...user }
+  editingUserIndex.value = users.value.findIndex(u => u.id === user.id)
+  showEditUserModal.value = true
+}
+
+const closeEditUserModal = () => {
+  showEditUserModal.value = false
+  editingUser.value = {
+    id: null,
+    name: '',
+    email: '',
+    department: '',
+    role: '',
+    active: true
+  }
+  editingUserIndex.value = -1
+}
+
+const saveUser = () => {
+  if (!editingUser.value.name || !editingUser.value.email || !editingUser.value.role) return
+  
+  if (editingUserIndex.value !== -1) {
+    users.value[editingUserIndex.value] = { ...editingUser.value }
+    closeEditUserModal()
+    alert('ユーザー情報を更新しました')
+  }
 }
 
 const toggleUserStatus = (user) => {
