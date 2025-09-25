@@ -5,30 +5,43 @@ const isAuthenticated = ref(false)
 const loading = ref(false)
 
 export function useAuth() {
-    const { $fetch } = useNuxtApp()
+    const config = useRuntimeConfig()
+    const apiBaseUrl = config.public.apiBaseUrl || 'http://localhost:9000'
 
     const login = async (email, password) => {
         loading.value = true
         try {
-            const response = await $fetch('/api/auth/login', {
+            const response = await $fetch(`${apiBaseUrl}/api/auth/login`, {
                 method: 'POST',
-                body: { email, password }
+                body: { email, password },
+                credentials: 'include'
             })
 
-            if (response.user) {
-                // トークンをCookieに保存
-                const tokenCookie = useCookie('auth-token', {
-                    httpOnly: false, // クライアントサイドでも読めるように
-                    secure: process.env.NODE_ENV === 'production',
-                    sameSite: 'lax',
-                    maxAge: 60 * 60 * 24 * 7 // 7日間
-                })
-                tokenCookie.value = response.token
-
+            if (response.status === 'success' && response.user) {
                 currentUser.value = response.user
                 isAuthenticated.value = true
 
+                if (response.token) {
+                    const tokenCookie = useCookie('auth-token', {
+                        httpOnly: false,
+                        secure: process.env.NODE_ENV === 'production',
+                        sameSite: 'lax',
+                        maxAge: 60 * 60 * 24 * 7
+                    })
+                    tokenCookie.value = response.token
+                }
+
+                const userIdCookie = useCookie('user-id', {
+                    httpOnly: false,
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'lax',
+                    maxAge: 60 * 60 * 24 * 7
+                })
+                userIdCookie.value = response.user.userId
+
                 return { success: true, user: response.user }
+            } else {
+                return { success: false, error: response.message || 'ログインに失敗しました' }
             }
         } catch (error) {
             console.error('Login error:', error)
@@ -40,17 +53,24 @@ export function useAuth() {
 
     const checkAuth = async () => {
         const token = useCookie('auth-token')
-        if (!token.value) {
+        const userId = useCookie('user-id')
+        const config = useRuntimeConfig()
+        const apiBaseUrl = config.public.apiBaseUrl || 'http://localhost:9000'
+
+        if (!token.value && !userId.value) {
             isAuthenticated.value = false
             currentUser.value = null
             return false
         }
 
         try {
-            const response = await $fetch('/api/auth/me', {
-                headers: {
-                    'Authorization': `Bearer ${token.value}`
-                }
+            const headers = token.value
+                ? { 'Authorization': `Bearer ${token.value}` }
+                : {}
+
+            const response = await $fetch(`${apiBaseUrl}/api/auth/me`, {
+                headers,
+                credentials: 'include'
             })
 
             if (response.user) {
@@ -60,24 +80,35 @@ export function useAuth() {
             }
         } catch (error) {
             console.error('Auth check error:', error)
+            if (userId.value && currentUser.value) {
+                isAuthenticated.value = true
+                return true
+            }
+
             isAuthenticated.value = false
             currentUser.value = null
             const tokenCookie = useCookie('auth-token')
+            const userIdCookie = useCookie('user-id')
             tokenCookie.value = null
+            userIdCookie.value = null
             return false
         }
     }
 
     const logout = async () => {
         loading.value = true
+        const config = useRuntimeConfig()
+        const apiBaseUrl = config.public.apiBaseUrl || 'http://localhost:9000'
+
         try {
             const token = useCookie('auth-token')
             if (token.value) {
-                await $fetch('/api/auth/logout', {
+                await $fetch(`${apiBaseUrl}/api/auth/logout`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token.value}`
-                    }
+                    },
+                    credentials: 'include'
                 })
             }
         } catch (error) {
@@ -86,7 +117,9 @@ export function useAuth() {
             currentUser.value = null
             isAuthenticated.value = false
             const tokenCookie = useCookie('auth-token')
+            const userIdCookie = useCookie('user-id')
             tokenCookie.value = null
+            userIdCookie.value = null
             loading.value = false
             await navigateTo('/login')
         }
@@ -99,18 +132,11 @@ export function useAuth() {
         }
     }
 
-    // 既存の computed properties
     const user = computed(() => currentUser.value)
 
     const userRole = computed(() => {
         if (!currentUser.value) return 'user'
-        // roleフィールドがある場合はそれを使用
-        if (currentUser.value.role) return currentUser.value.role
-        // なければメールアドレスから判定（後方互換性）
-        const email = currentUser.value.email
-        if (email === 'support@zwei.com') return 'support'
-        if (email === 'yamada@zwei.com') return 'approver'
-        return 'user'
+        return currentUser.value.role || 'user'
     })
 
     const canViewAllTickets = computed(() => userRole.value === 'support')

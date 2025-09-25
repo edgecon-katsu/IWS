@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
 const { login, checkAuth, userRole } = useAuth()
@@ -66,11 +66,10 @@ const password = ref('')
 const error = ref('')
 const loading = ref(false)
 
-// マウント時に既にログインしているかチェック
 onMounted(async () => {
   const isAuthenticated = await checkAuth()
   if (isAuthenticated) {
-    redirectToDashboard()
+    await redirectToDashboard()
   }
 })
 
@@ -82,10 +81,10 @@ const handleLogin = async () => {
     const result = await login(email.value, password.value)
 
     if (result.success) {
-      // ログイン成功
-      redirectToDashboard()
+      console.log('Login successful, redirecting...')
+      await nextTick()
+      await redirectToDashboard()
     } else {
-      // ログイン失敗
       error.value = result.error || 'メールアドレスまたはパスワードが正しくありません'
     }
   } catch (err) {
@@ -96,18 +95,14 @@ const handleLogin = async () => {
   }
 }
 
-const redirectToDashboard = () => {
-  // ユーザーのロールに応じてリダイレクト先を変更
+const redirectToDashboard = async () => {
   const role = userRole.value
-  if (role === 'support') {
-    navigateTo('/dashboard')
-  } else {
-    navigateTo('/tickets')
-  }
-}
+  console.log('User role:', role)
 
-const fillDemoAccount = (demoEmail, demoPassword) => {
-  email.value = demoEmail
-  password.value = demoPassword
+  if (role === 'support') {
+    await navigateTo('/dashboard')
+  } else {
+    await navigateTo('/tickets')
+  }
 }
 </script>

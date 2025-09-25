@@ -1,6 +1,6 @@
 export function useApi() {
     const config = useRuntimeConfig()
-    const baseURL = config.public.apiBaseUrl
+    const baseURL = config.public.apiBaseUrl || 'http://localhost:9000'
 
     const apiFetch = $fetch.create({
         baseURL,
