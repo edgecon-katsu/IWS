@@ -13,12 +13,12 @@
           <label class="label">
             <span class="label-text font-medium">メールアドレス</span>
           </label>
-          <input 
-            v-model="email"
-            type="email" 
-            class="iws-input"
-            placeholder="your-email@zwei.com"
-            required
+          <input
+              v-model="email"
+              type="email"
+              class="iws-input"
+              required
+              :disabled="loading"
           />
         </div>
 
@@ -26,12 +26,13 @@
           <label class="label">
             <span class="label-text font-medium">パスワード</span>
           </label>
-          <input 
-            v-model="password"
-            type="password" 
-            class="iws-input"
-            placeholder="パスワードを入力"
-            required
+          <input
+              v-model="password"
+              type="password"
+              class="iws-input"
+              placeholder="パスワードを入力"
+              required
+              :disabled="loading"
           />
         </div>
 
@@ -40,92 +41,73 @@
           <span>{{ error }}</span>
         </div>
 
-        <button 
-          type="submit" 
-          class="iws-btn-primary w-full"
-          :disabled="loading"
+        <button
+            type="submit"
+            class="iws-btn-primary w-full"
+            :disabled="loading"
         >
           <span v-if="loading" class="loading loading-spinner loading-sm"></span>
-          ログイン
+          <span v-else>ログイン</span>
         </button>
       </form>
-
-      <!-- デモアカウント -->
-      <div class="mt-8 p-4 bg-base-200 rounded-lg">
-        <h3 class="font-semibold text-sm mb-3">デモアカウント</h3>
-        <div class="space-y-2 text-xs">
-          <div class="flex justify-between">
-            <span>一般ユーザー:</span>
-            <code>tanaka@zwei.com</code>
-          </div>
-          <div class="flex justify-between">
-            <span>承認者:</span>
-            <code>yamada@zwei.com</code>
-          </div>
-          <div class="flex justify-between">
-            <span>サポート担当:</span>
-            <code>support@zwei.com</code>
-          </div>
-          <div class="text-center mt-2 text-gray-500">
-            パスワード: <code>password</code>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
-const { setUser } = useAuth()
+const { login, checkAuth, userRole } = useAuth()
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
 
-// デモアカウント情報
-const demoAccounts = {
-  'tanaka@zwei.com': {
-    id: 1,
-    name: '田中太郎',
-    email: 'tanaka@zwei.com',
-    department: '営業部',
-    role: 'user'
-  },
-  'yamada@zwei.com': {
-    id: 2,
-    name: '山田花子',
-    email: 'yamada@zwei.com',
-    department: '管理部',
-    role: 'approver'
-  },
-  'support@zwei.com': {
-    id: 3,
-    name: 'サポート担当',
-    email: 'support@zwei.com',
-    department: 'サポート部',
-    role: 'support'
+// マウント時に既にログインしているかチェック
+onMounted(async () => {
+  const isAuthenticated = await checkAuth()
+  if (isAuthenticated) {
+    redirectToDashboard()
   }
-}
+})
+
 const handleLogin = async () => {
   loading.value = true
   error.value = ''
 
   try {
-    // ダミー認証
-    if (password.value === 'password' && demoAccounts[email.value]) {
-      // ユーザー情報を設定
-      setUser(demoAccounts[email.value])
-      await navigateTo('/dashboard')
+    const result = await login(email.value, password.value)
+
+    if (result.success) {
+      // ログイン成功
+      redirectToDashboard()
     } else {
-      error.value = 'メールアドレスまたはパスワードが正しくありません'
+      // ログイン失敗
+      error.value = result.error || 'メールアドレスまたはパスワードが正しくありません'
     }
   } catch (err) {
-    error.value = 'ログインに失敗しました'
+    console.error('Login error:', err)
+    error.value = 'ログインに失敗しました。しばらくしてから再度お試しください。'
   } finally {
     loading.value = false
   }
+}
+
+const redirectToDashboard = () => {
+  // ユーザーのロールに応じてリダイレクト先を変更
+  const role = userRole.value
+  if (role === 'support') {
+    navigateTo('/dashboard')
+  } else {
+    navigateTo('/tickets')
+  }
+}
+
+const fillDemoAccount = (demoEmail, demoPassword) => {
+  email.value = demoEmail
+  password.value = demoPassword
 }
 </script>

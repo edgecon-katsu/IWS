@@ -37,20 +37,14 @@
 </template>
 
 <script setup>
-import { 
+import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon
 } from '@heroicons/vue/24/outline'
 
-const { user, userRole } = useAuth()
+const { user, logout } = useAuth()
 
-const handleLogout = () => {
-  // ユーザー情報をクリア
-  const { setUser } = useAuth()
-  setUser(null)
-  
-  // ログインページにリダイレクト
-  navigateTo('/login')
+const handleLogout = async () => {
+  await logout()
 }
-
 </script>
